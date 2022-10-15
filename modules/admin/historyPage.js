@@ -48,6 +48,16 @@ const historyPage = `
                 <span class="txt">Home</span>
               </a>
             </li>
+            <li id="obFormBtn">
+              <a href="javascript:void(0);">
+                <span class="txt">OB Form</span>
+              </a>
+            </li>
+            <li id="gynFormBtn">
+              <a href="javascript:void(0);">
+                <span class="txt">GYN Form</span>
+              </a>
+            </li>
             <li>
               <a href="javascript:void(0);" class="active">
                 <span class="icon">

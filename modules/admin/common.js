@@ -9,6 +9,8 @@ const commonLoad = (type = "") => {
   if (type) {
     usersLoad();
     logoutLoad();
+    obFormPageLoad();
+    gynFormPageLoad();
     return;
   }
   usersLoad();

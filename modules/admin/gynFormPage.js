@@ -34,23 +34,6 @@ const gynFormPage = `
                 <span class="txt">GYN Form</span>
               </a>
             </li>
-            <li>
-              <a href="javascript:void(0);">
-                <span class="icon">
-                  <img
-                    src="./asset/img/share-clock.png"
-                    alt="History"
-                    class="iconBlack"
-                  />
-                  <img
-                    src="./asset/img/share-clock-blue.png"
-                    alt="History"
-                    class="iconBlue"
-                  />
-                </span>
-                <span class="txt">History</span>
-              </a>
-            </li>
             <li id="logoutBtn">
               <a href="javascript:void(0);">
                 <span class="icon"
