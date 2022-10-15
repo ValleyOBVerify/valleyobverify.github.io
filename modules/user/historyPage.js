@@ -3,6 +3,14 @@ import { commonLoad, searchLoad, sortingLoad, download } from "./common.js";
 
 const historyPage = `
 <div>
+  <style>
+    .user-backup-table-wrapp .custom-table th:nth-child(1){min-width: 180px;}
+    .user-backup-table-wrapp .custom-table th:nth-child(2){min-width: 180px;}
+    .user-backup-table-wrapp .custom-table th:nth-child(3){min-width: 180px;}
+    .user-backup-table-wrapp .custom-table th:nth-child(4){min-width: 180px;}
+    .user-backup-table-wrapp .custom-table th:nth-child(5){min-width: 180px;}
+    .user-backup-table-wrapp .custom-table th:nth-child(6){min-width: 250px;}
+  </style>
   <section id="wrapper">
     <header class="site-header">
       <div class="container-fluid">
@@ -71,9 +79,9 @@ const historyPage = `
     </header>
 
     <main class="site-main">
-      <section class="common-sec user-backup-sec">
+      <section class="user-backup-sec">
         <div class="container-fluid">
-          <div class="user-backup-table-wrapp">
+          <div class="user-backup-table-wrapp py-5">
             <table class="custom-table"></table>
           </div>
         </div>
@@ -106,8 +114,8 @@ const showData = (data, type = "") => {
   for (let x of data) {
     idList.push({
       index,
-      file: x[4].substr(1),
-      name: x[0].substr(1) + " - " + x[3].substr(1),
+      file: x[3].substr(1),
+      name: x[0].substr(1) + "_" + x[1].substr(1) + "_" + x[2].substr(1),
     });
 
     const downloadBtn = `
@@ -121,10 +129,9 @@ const showData = (data, type = "") => {
     result += `
     <tr>
       <td>${x[0].substr(1)}</td>
-      <td>${x[1].substr(1)}</td>
+      <td><span>${x[1].substr(1)}</span></td>
       <td>${x[2].substr(1)}</td>
-      <td>${x[3].substr(1)}</td>
-      <td>${dateCovert(x[5])}</td>
+      <td><span>${dateCovert(x[4])}</span></td>
       <td class="text-center">
         ${downloadBtn}
       </td>
@@ -136,9 +143,8 @@ const showData = (data, type = "") => {
   table.innerHTML = `
   <tr>
     <th>Name</th>
-    <th>Date of Birth</th>
-    <th>Email</th>
-    <th>Document</th>
+    <th>DOB</th>
+    <th>Form Type</th>
     <th>Date</th>
     <th class="text-center">Download</th>
   </tr>

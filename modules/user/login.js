@@ -1,5 +1,6 @@
 import { d } from "../../asset/js/custom.lib.js";
-import { homeLoad, homePage } from "./homePage.js";
+import { homePage } from "./homePage.js";
+import { commonLoad } from "./common.js";
 
 const login = `
     <section id="wrapper">
@@ -107,7 +108,7 @@ const loginLoad = () => {
       return;
     }
     post(GAS, {
-      type: 13,
+      type: 14,
       data: JSON.stringify({
         userName: username.value.trim(),
         password: $password(),
@@ -115,13 +116,13 @@ const loginLoad = () => {
       }),
     }).then(async (res) => {
       res = JSON.parse(JSON.parse(res).messege);
-      const { result, data, messege, history, database } = res;
+      const { result, messege, history, database } = res;
       if (result && messege != "ip") {
         document.querySelector("#root").innerHTML = homePage;
         d.database = messege;
         d.history = history;
         d.$database = database;
-        homeLoad(data);
+        commonLoad(1);
       } else if (result && messege == "ip") {
         document.querySelector("#login-error").innerText =
           "Unauthorized Access. Contact System Administrator.";

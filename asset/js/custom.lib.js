@@ -151,8 +151,9 @@ const d = {
       },
     };
   },
-  dateCovert(date) {
-    date = new Date(date);
+  dateCovert(date ="") {
+    if(date) date = new Date(date);
+    else date = new Date();
     return (
       String(date.getMonth() + 1).padStart(2, "0") +
       "-" +
@@ -207,6 +208,15 @@ const d = {
             reader.readAsDataURL(blob);
           })
       );
+  },
+  blobToData64(blob) {
+    return new Promise((callback) => {
+      let reader = new FileReader();
+      reader.onload = function () {
+        callback(this.result);
+      };
+      reader.readAsDataURL(blob);
+    });
   },
   convertDataURIToBinary(dataURI) {
     var raw = window.atob(dataURI.split(",")[1]);

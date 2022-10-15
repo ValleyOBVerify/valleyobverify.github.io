@@ -3,97 +3,14 @@ import { commonLoad, searchLoad, sortingLoad, download } from "./common.js";
 
 const historyPage = `
 <div>
-  <style>
-  .common-sec {
-    padding: 30px 0;
-  }
-
-  .container-fluid {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-  }
-
-  .user-backup-table-wrapp {
-    margin-left: 280px;
-  }
-  .user-backup-table-wrapp .custom-table th,
-  .user-backup-table-wrapp .custom-table td {
-    min-width: 170px;
-  }
-  .user-backup-table-wrapp .custom-table th:first-child,
-  .user-backup-table-wrapp .custom-table td:first-child {
-    padding-left: 0;
-  }
-  .user-backup-table-wrapp .custom-table th:nth-child(3) {
-    min-width: 300px;
-  }
-  .user-backup-table-wrapp .tb-btn {
-    border: none;
-    padding: 0;
-    font-size: 18px;
-  }
-
-  .custom-table {
-    border-collapse: collapse;
-    font-size: 16px;
-  }
-  .custom-table th,
-  .custom-table td {
-    min-width: 180px;
-  }
-  .custom-table th .icon,
-  .custom-table td .icon {
-    margin-right: 3px;
-  }
-  .custom-table th {
-    padding: 15px;
-    font-size: 18px;
-  }
-  .custom-table td {
-    padding: 12px 15px;
-  }
-  .custom-table .tb-btn {
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    padding: 5px 15px;
-    background-color: #fff;
-  }
-  .custom-table .tb-btn .white {
-    display: none;
-  }
-  .custom-table .tb-btn:hover {
-    background-color: #004a7f;
-    color: #fff;
-  }
-  .custom-table .tb-btn:hover .white {
-    display: inline;
-  }
-  .custom-table .tb-btn:hover .black {
-    display: none;
-  }
-  .custom-table .icon-btn {
-    border: none;
-    padding: 0;
-    margin: 0;
-    background: none;
-  }
-  .custom-table .icon-btn .icon {
-    flex: none;
-  }
-  .custom-table .icon-btn .icon .iconBlue {
-    display: none;
-  }
-  .custom-table .icon-btn:hover .icon .iconBlack {
-    display: none;
-  }
-  .custom-table .icon-btn:hover .icon .iconBlue {
-    display: inline;
-  }
-
-
-  </style>
+<style>
+  .user-backup-table-wrapp .custom-table th:nth-child(1){min-width: 180px;}
+  .user-backup-table-wrapp .custom-table th:nth-child(2){min-width: 180px;}
+  .user-backup-table-wrapp .custom-table th:nth-child(3){min-width: 180px;}
+  .user-backup-table-wrapp .custom-table th:nth-child(4){min-width: 180px;}
+  .user-backup-table-wrapp .custom-table th:nth-child(5){min-width: 180px;}
+  .user-backup-table-wrapp .custom-table th:nth-child(6){min-width: 250px;}
+</style>
   <section id="wrapper">
     <header class="site-header">
       <div class="container-fluid">
@@ -162,7 +79,7 @@ const historyPage = `
     </header>
 
     <main class="site-main">
-      <section class="common-sec user-backup-sec">
+      <section class="user-backup-sec">
         <div class="container-fluid">
           <div class="user-backup-table-wrapp">
             <table class="custom-table"></table>
@@ -196,11 +113,11 @@ const showData = ({ user, database, data }, type = "") => {
   let idList = [];
   for (let x of data) {
     let id = index;
-    if (type) id = x[6];
+    if (type) id = x[5];
     idList.push({
       id,
-      file: x[4].substr(1),
-      name: x[0].substr(1) + " - " + x[3].substr(1),
+      file: x[3].substr(1),
+      name: x[0].substr(1) + "_" + x[1].substr(1) + "_" + x[2].substr(1),
     });
 
     const downloadBtn = `
@@ -213,11 +130,10 @@ const showData = ({ user, database, data }, type = "") => {
 
     result += `
     <tr>
-      <td>${x[0].substr(1)}</td>
-      <td>${x[1].substr(1)}</td>
-      <td>${x[2].substr(1)}</td>
-      <td>${x[3].substr(1)}</td>
-      <td>${dateCovert(x[5])}</td>
+    <td>${x[0].substr(1)}</td>
+    <td><span>${x[1].substr(1)}</span></td>
+    <td>${x[2].substr(1)}</td>
+    <td><span>${dateCovert(x[4])}</span></td>
       <td class="text-center">
         ${downloadBtn}
       </td>
@@ -251,28 +167,14 @@ const showData = ({ user, database, data }, type = "") => {
   </caption>
   <tr>
     <th>Name</th>
-    <th>Date of Birth</th>
-    <th>Email</th>
-    <th>Document</th>
+    <th>DOB</th>
+    <th>Form Type</th>
     <th>Date</th>
     <th class="text-center">Download</th>
-    <th class="text-center position-relative">
-      <button id="clearAllBtn"
-        class="custom-btn popSubmit"
-        style="
-          position: absolute;
-          top: -50px;
-          left: 0;
-          right: 0;
-          margin: 0 auto;
-          max-width: 130px;
-          padding: 10px 20px;
-          font-size: 14px;
-        "
-      >
+    <th class="text-center">
+      <button id="clearAllBtn" class="custom-btn" style="font-size: 14px; padding: 10px 20px;">
         Clear History
       </button>
-      <span>Delete</span>
     </th>
   </tr>
 	${result}
@@ -286,7 +188,7 @@ const showData = ({ user, database, data }, type = "") => {
     button.onclick = async () => {
       loading.style.display = "block";
       let res = await post(GAS, {
-        type: 11,
+        type: 12,
         data: JSON.stringify({
           id: x.id,
           database: database,
@@ -313,7 +215,7 @@ const showData = ({ user, database, data }, type = "") => {
     clearAllBtn.innerHTML = "Processing...";
     loading.style.display = "block";
     let res = await post(GAS, {
-      type: 12,
+      type: 13,
       data: JSON.stringify({
         database: database,
       }),
@@ -331,7 +233,7 @@ const historyLoad = (database) => {
   const { post, GAS } = d;
   commonLoad(1);
   post(GAS, {
-    type: 10,
+    type: 11,
     data: JSON.stringify({
       database: database,
     }),

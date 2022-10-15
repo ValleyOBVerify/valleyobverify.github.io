@@ -8,8 +8,6 @@ import { userPage, addUserLoad } from "./userPage.js";
 const commonLoad = (type = "") => {
   if (type) {
     usersLoad();
-    obFormPageLoad();
-    gynFormPageLoad();
     logoutLoad();
     return;
   }

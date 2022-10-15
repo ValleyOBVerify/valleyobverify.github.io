@@ -2,32 +2,46 @@ import { d } from "../../asset/js/custom.lib.js";
 import { searchLoad, sortingLoad, download } from "../common.js";
 import { login, loginLoad } from "./login.js";
 import { historyPage, historyLoad } from "./historyPage.js";
-import { homeLoad, homePage } from "./homePage.js";
-import { emailPage, emailLoad } from "./emailPage.js";
+import { homePage } from "./homePage.js";
+import { obFormLoad, obFormPage } from "./obForm.js";
+import { gynFormLoad, gynFormPage } from "./gynForm.js";
 
-const commonLoad = () => {
-  document.title = "Valley Obgyn - User";
+const commonLoad = (type = "") => {
+  document.title = "Insurance Verification";
   homeLoad_();
   historyLoad_();
   logoutLoad();
+
+  if(type){
+    obFormLoad_();
+    gynFormLoad_();
+  }
 };
 
 const homeLoad_ = () => {
-  const { GAS, post, $database: database } = d;
   let button = document.querySelector("#homeBtn");
   button.onclick = () => {
     document.querySelector("#root").innerHTML = homePage;
+    commonLoad(1);
+  };
+};
+
+const obFormLoad_ = () => {
+  const { GAS, post, $database: database } = d;
+  let button = document.querySelector("#obFormBtn");
+  button.onclick = () => {
+    document.querySelector("#root").innerHTML = obFormPage;
     post(GAS, {
-      type: 14,
+      type: 8,
       data: JSON.stringify({
         database: database,
       }),
     })
       .then(async (res) => {
         res = JSON.parse(JSON.parse(res).messege);
-        const { result, data } = res;
+        const { result, content } = res;
         if (result) {
-          homeLoad(data);
+          obFormLoad(content);
         }
       })
       .catch((err) => {
@@ -36,9 +50,28 @@ const homeLoad_ = () => {
   };
 };
 
-const emailLoad_ = (docName, id) => {
-  document.querySelector("#root").innerHTML = emailPage;
-  emailLoad(docName, id);
+const gynFormLoad_ = () => {
+  const { GAS, post, $database: database } = d;
+  let button = document.querySelector("#gynFormBtn");
+  button.onclick = () => {
+    document.querySelector("#root").innerHTML = gynFormPage;
+    post(GAS, {
+      type: 10,
+      data: JSON.stringify({
+        database: database,
+      }),
+    })
+      .then(async (res) => {
+        res = JSON.parse(JSON.parse(res).messege);
+        const { result, content } = res;
+        if (result) {
+          gynFormLoad(content);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 };
 
 const historyLoad_ = () => {
@@ -70,4 +103,4 @@ const inputPrevent = (e) => {
 
 window.inputPrevent = inputPrevent;
 
-export { commonLoad, searchLoad, sortingLoad, download, emailLoad_ };
+export { commonLoad, searchLoad, sortingLoad, download };
