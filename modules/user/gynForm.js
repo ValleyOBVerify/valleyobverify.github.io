@@ -142,24 +142,6 @@ const gynFormPage = `
 
                         <div class="col-md-6">
                           <div class="mdl-input-bx">
-                            <label>Out of Pocket (if applicable):</label>
-                            <input
-                              type="text"
-                              name=""
-                              id=""
-                              class="form-control"
-                              autocomplete="off"
-                              required=""
-                              placeholder="Enter Out of Pocket"
-                              spellcheck="false"
-                            />
-                            <div value="div" class="form-control"></div>
-                          </div>
-                        </div>
-                        <!-- col -->
-
-                        <div class="col-md-6">
-                          <div class="mdl-input-bx">
                             <label>Effective Date:</label>
                             <input
                               type="text"
@@ -195,31 +177,13 @@ const gynFormPage = `
                           </div>
                         </div>
                         <!-- col -->
-
-                        <div class="col-md-6">
-                          <div class="mdl-input-bx">
-                            <label
-                              >Specialist Office Visit (Problem visit):</label
-                            >
-                            <input
-                              type="text"
-                              name=""
-                              id=""
-                              class="form-control"
-                              autocomplete="off"
-                              required=""
-                              placeholder="Enter Specialist Office Visit"
-                              spellcheck="false"
-                            />
-                            <div value="div" class="form-control"></div>
-                          </div>
-                        </div>
-                        <!-- col -->
                       </div>
                       <!-- row -->
 
                       <div class="mdl-input-bx">
-                        <label>HRA/HAS Account Balance if Applicable:</label>
+                        <label
+                          >Specialist Office Visit (Problem visit):</label
+                        >
                         <input
                           type="text"
                           name=""
@@ -227,7 +191,7 @@ const gynFormPage = `
                           class="form-control"
                           autocomplete="off"
                           required=""
-                          placeholder="Enter HRA/HAS Account Balance"
+                          placeholder="Enter Specialist Office Visit"
                           spellcheck="false"
                         />
                         <div value="div" class="form-control"></div>
@@ -614,49 +578,35 @@ const gynFormLoad = (data) => {
       $(div).hide();
     }
 
-    const contentSvg = new XMLSerializer().serializeToString(
-      elementToSVG(contentDiv)
-    );
+    // const contentSvg = new XMLSerializer().serializeToString(
+    //   elementToSVG(contentDiv)
+    // );
 
     let formViewBox = formSvg.substr(formSvg.indexOf('viewBox="') + 9);
     formViewBox = formViewBox.substr(0, formViewBox.indexOf('"')).split(" ");
 
-    let contentViewBox = contentSvg.substr(contentSvg.indexOf('viewBox="') + 9);
-    contentViewBox = contentViewBox
-      .substr(0, contentViewBox.indexOf('"'))
-      .split(" ");
+    // let contentViewBox = contentSvg.substr(contentSvg.indexOf('viewBox="') + 9);
+    // contentViewBox = contentViewBox
+    //   .substr(0, contentViewBox.indexOf('"'))
+    //   .split(" ");
 
     const docTitle = "GYN Insurance Verification";
     const docType = "GYN";
 
-    const ratio = Number(formViewBox[3]) / Number(formViewBox[2]);
+    //const ratio = Number(formViewBox[3]) / Number(formViewBox[2]);
 
     // formViewBox[2] = 300;
 
     const doc = new PDFDocument({
-      compress: false,
-      size: [
-        Number(formViewBox[2]) + 100,
-        Number(formViewBox[2]) * ratio + 150,
-      ],
+      compress: false
     });
     doc.fontSize(22);
     doc.font("Helvetica-Bold").text(docTitle, 50, 50);
 
     SVGtoPDF(doc, formSvg, 50, 100, {
-      width: Number(formViewBox[2]),
-      height: Number(formViewBox[3]),
-      preserveAspectRatio: "xMinYMin meet",
-    });
-
-    doc.addPage({
-      size: [Number(formViewBox[2]) + 100, Number(contentViewBox[3]) + 100],
-      compress: false,
-    });
-
-    SVGtoPDF(doc, contentSvg, 50, 50, {
-      width: Number(formViewBox[2]),
-      preserveAspectRatio: "xMinYMin meet",
+      width: 512,
+      height: 642,
+      preserveAspectRatio: "xMinYMid meet",
     });
 
     let stream = doc.pipe(blobStream());
