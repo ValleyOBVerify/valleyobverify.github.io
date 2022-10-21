@@ -635,6 +635,7 @@ const gynFormLoad = (data) => {
             loading.style.display = "none";
             $("#submitModal").modal("show");
             download(resultData64, fileName);
+            todayDate.value = dateCovert();
           } else {
             console.log(res);
             error.style.display = "block";
